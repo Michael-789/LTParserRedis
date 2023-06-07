@@ -9,6 +9,7 @@ public class Location
 
     public Location()
 	{
+        //
 	}
 
     public Location(int x, int y, int z)
