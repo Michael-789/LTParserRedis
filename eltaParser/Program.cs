@@ -1,3 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+using EltaParser;
 
-Console.WriteLine("Hello, World!");
+
+
+RabbitMQHandler rh = new RabbitMQHandler();
+
+rh.Receive("topic_flights", "flight.info");
+Console.ReadLine();
+
