@@ -1,38 +1,31 @@
-﻿using EltaParser;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
+using EltaParser;
 
-namespace EltaDataSimulator
+namespace eltaParser
 {
-    internal class DataCreator
-    {  
-        static int x = 750;
-        static int y = 500;
-        static int z = 1000;
+    internal static class DataCreator
+    {
+        private const int X = 750;
+        private const int Y = 500;
+        private const int Z = 1000;
 
-        static int speed = 850;
+        private const int Speed = 850;
 
-        static int msgAmount = 600;
+        private const int MsgAmount = 600;
 
-        static int id = 1;
-        public static void create()
+        private static int _id = 1;
+
+        public static void Create()
         {
-
-            RabbitMQHandler rabbitMQHandler = new RabbitMQHandler();
+            RabbitMqHandler rabbitMqHandler = new RabbitMqHandler();
 
 
             int secondsCounter = 0;
 
             while (!(Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.X))
             {
-
-                List<byte[]> arrayList = createData();
+                List<byte[]> arrayList = CreateData();
                 DateTime startTime = DateTime.Now;
 
                 // Console.WriteLine("arrayList " + arrayList.Count);
@@ -41,14 +34,12 @@ namespace EltaDataSimulator
                 {
                     listCount++;
                     //byte[] body = arrayList[i];
-                    rabbitMQHandler.Send("flights", "#", body);
-
+                    rabbitMqHandler.Send("flights", "#", body);
                 }
 
                 DateTime endTime = DateTime.Now;
 
                 TimeSpan ts = (endTime - startTime);
-
 
 
                 //Console.WriteLine("Elapsed Time is {0} ms", ts.TotalMilliseconds);
@@ -61,55 +52,49 @@ namespace EltaDataSimulator
                 }
 
                 secondsCounter++;
-               // if ((secondsCounter % 1) == 0)
+                // if ((secondsCounter % 1) == 0)
                 //{
-                   Console.WriteLine("Processed {0} during {1} seconds", listCount * secondsCounter, secondsCounter);
-               // }
-                
-
-
+                Console.WriteLine("Processed {0} during {1} seconds", listCount * secondsCounter, secondsCounter);
+                // }
             }
         }
 
-        private static List<byte[]> createData()
+        private static List<byte[]> CreateData()
         {
-            
             List<byte[]> arrayList = new List<byte[]>();
 
-            int newX = x, newY = y, newZ = z;
+            int newX = X, newY = Y, newZ = Z;
 
-            for(int i = 0; i < msgAmount; i++)
+            for (int i = 0; i < MsgAmount; i++)
             {
                 JsonObject flightJson = new JsonObject();
-                if ((id % 10) == 0)
+                if ((_id % 10) == 0)
                 {
                     newZ = 1001;
                 }
-                else if ((id % 5) == 0)
+                else if ((_id % 5) == 0)
                 {
                     newX = 42;
                     newY = 42;
                 }
 
-                flightJson.Add("Id", id++);
+                flightJson.Add("Id", _id++);
 
                 flightJson.Add("location", new JsonObject()
-                    {
-                        { "longitude", newX },
-                        { "latitude", newY },
-                        { "altitude", newZ }
-                    });
+                {
+                    { "longitude", newX },
+                    { "latitude", newY },
+                    { "altitude", newZ }
+                });
 
-                flightJson.Add("speed", speed);
+                flightJson.Add("speed", Speed);
                 //Console.WriteLine(flightJson.ToString());
 
                 byte[] body = Encoding.Default.GetBytes(flightJson.ToString());
                 arrayList.Add(body);
             }
 
-          return arrayList;
-
-           
+            return arrayList;
         }
     }
 }

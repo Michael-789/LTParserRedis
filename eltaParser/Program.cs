@@ -1,8 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-using EltaDataSimulator;
+﻿using eltaParser;
 using EltaParser;
-using System.Text;
-using System.Text.Json.Nodes;
 
 Console.WriteLine("Hello,please enter 1 to start");
 int start = Convert.ToInt32(Console.ReadLine());
@@ -10,12 +7,9 @@ if (start == 1)
 {
     Console.WriteLine("Press X to stop");
 
-    RabbitMQHandler rabbitMQHandler = new RabbitMQHandler();
+    RabbitMqHandler rabbitMqHandler = new RabbitMqHandler();
     string[] queues = { "alerts" };
-    string[] exchages = { "alerts" };
-    rabbitMQHandler.Receive(queues, exchages, "#");
-    DataCreator.create();
+    string[] exchanges = { "alerts" };
+    rabbitMqHandler.Receive(queues, exchanges, "#");
+    DataCreator.Create();
 }
-
-
-
