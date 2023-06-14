@@ -11,16 +11,16 @@ namespace EltaParser
 
         public RabbitMqHandler()
         {
-            var factory = new ConnectionFactory { HostName = "localhost" };
-            var connection = factory.CreateConnection();
+            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" };            var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
         }
 
-        public void Send(string exchange, string routingKey, byte[] body)
+        public void Send(string queue, string exchange, string routingKey, byte[] body)
         {
             _channel.ExchangeDeclare(exchange, type: ExchangeType.Topic);
+            _channel.QueueDeclare(queue, exclusive: false);
 
-
+            Console.WriteLine(Encoding.UTF8.GetString(body));
             _channel.BasicPublish(exchange,
                 routingKey,
                 basicProperties: null,

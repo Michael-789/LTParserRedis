@@ -34,7 +34,7 @@ namespace eltaParser
                 {
                     listCount++;
                     //byte[] body = arrayList[i];
-                    rabbitMqHandler.Send("flights", "#", body);
+                    rabbitMqHandler.Send("flights", "flights", "#", body);
                 }
 
                 DateTime endTime = DateTime.Now;
@@ -63,10 +63,10 @@ namespace eltaParser
         {
             List<byte[]> arrayList = new List<byte[]>();
 
-            int newX = X, newY = Y, newZ = Z;
 
             for (int i = 0; i < MsgAmount; i++)
             {
+                int newX = X, newY = Y, newZ = Z;
                 JsonObject flightJson = new JsonObject();
                 if ((_id % 10) == 0)
                 {
