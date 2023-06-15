@@ -20,7 +20,7 @@ namespace EltaParser
             _channel.ExchangeDeclare(exchange, type: ExchangeType.Topic);
             _channel.QueueDeclare(queue, exclusive: false);
 
-            Console.WriteLine(Encoding.UTF8.GetString(body));
+            // Console.WriteLine(Encoding.UTF8.GetString(body));
             _channel.BasicPublish(exchange,
                 routingKey,
                 basicProperties: null,
@@ -43,10 +43,7 @@ namespace EltaParser
 
                 _channel.QueueBind(queueName, exchanges[i], routingKey);
             }
-
-
-            // Console.WriteLine(" [*] Waiting for messages.");
-
+            
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (_, ea) =>
             {
