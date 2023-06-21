@@ -1,4 +1,4 @@
-﻿namespace LTParser;
+﻿namespace LTParser.DTO;
 
 [Serializable]
 public class Size

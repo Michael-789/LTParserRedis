@@ -1,4 +1,4 @@
-﻿namespace LTParser;
+﻿namespace LTParser.DTO;
 
 [Serializable]
 public class Location
@@ -15,8 +15,8 @@ public class Location
 
     public Location(int x, int y, int z)
     {
-        this.Longitude = x;
-        this.Latitude = y;
-        this.Altitude = z;
+        Longitude = x;
+        Latitude = y;
+        Altitude = z;
     }
 }

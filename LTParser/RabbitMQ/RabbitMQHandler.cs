@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace LTParser
+namespace LTParser.RabbitMQ
 {
     internal class RabbitMqHandler
     {
@@ -11,7 +11,7 @@ namespace LTParser
 
         public RabbitMqHandler()
         {
-            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" };            var connection = factory.CreateConnection();
+            var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest" }; var connection = factory.CreateConnection();
             _channel = connection.CreateModel();
         }
 
@@ -43,7 +43,7 @@ namespace LTParser
 
                 _channel.QueueBind(queueName, exchanges[i], routingKey);
             }
-            
+
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (_, ea) =>
             {
