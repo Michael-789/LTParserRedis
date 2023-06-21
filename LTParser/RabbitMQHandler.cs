@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace EltaParser
+namespace LTParser
 {
     internal class RabbitMqHandler
     {
