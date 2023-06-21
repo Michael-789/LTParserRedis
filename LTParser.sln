@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eltaParser", "eltaParser\eltaParser.csproj", "{0B94D8BB-B6E0-46CA-8783-3A2BD929724C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LTParser", "LTParser\LTParser.csproj", "{0B94D8BB-B6E0-46CA-8783-3A2BD929724C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

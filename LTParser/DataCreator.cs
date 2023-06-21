@@ -2,7 +2,7 @@
 using System.Text.Json.Nodes;
 using EltaParser;
 
-namespace eltaParser
+namespace LTParser
 {
     internal static class DataCreator
     {
