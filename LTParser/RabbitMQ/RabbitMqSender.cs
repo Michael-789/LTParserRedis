@@ -1,11 +1,11 @@
 using System.Text;
 using RabbitMQ.Client;
 
-namespace LTParser.RabbitMQ
+namespace LTRuleEngine.RabbitMQ
 {
-    internal class RabbitMqAlertsSender : RabbitMqAbs
+    internal class RabbitMqSender : RabbitMqAbs
     {
-        public RabbitMqAlertsSender(string exchangeName, string routingKey = "#") : base(exchangeName, routingKey)
+        public RabbitMqSender(string exchangeName, string routingKey = "#") : base(exchangeName, routingKey)
         {
         }
 

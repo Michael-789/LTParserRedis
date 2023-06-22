@@ -1,16 +1,8 @@
 ﻿using LTParser;
 using LTParser.DTO;
-using LTParser.RabbitMQ;
+using LTRuleEngine.RabbitMQ;
 
-
-    Console.WriteLine("Press X to stop");
-
-    RabbitMqHandler rabbitMqHandler = new RabbitMqHandler();
-    string[] queues = { "alerts" };
-    string[] exchanges = { "alerts" };
-    rabbitMqHandler.Receive(queues, exchanges, "#");
-    DataCreator.Create();
-
-
-new RabbitMqReceiver("flights").Receive<Flight>(.Send);
+Console.WriteLine("Press X to stop");
+var parser = new Parser();
+new RabbitMqReceiver("flights").Receive<Flight>(parser.Parse);
 Console.ReadLine();
