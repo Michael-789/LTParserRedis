@@ -4,13 +4,25 @@ using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace LTRuleEngine.RabbitMQ
+namespace LTParser.RabbitMQ
 {
     public class RabbitMqReceiver : RabbitMqAbs
     {
+        private static RabbitMqReceiver instance;
+
+        public static RabbitMqReceiver getInstance(string exchangeName, string routingKey = "#")
+        {
+
+            if (instance == null)
+            {
+                instance = new RabbitMqReceiver(exchangeName, routingKey);
+            }
+            return instance;
+
+        }
         private string Queue { get; set; }
 
-        public RabbitMqReceiver(string exchangeName, string routingKey = "#") : base(exchangeName, routingKey)
+        private RabbitMqReceiver(string exchangeName, string routingKey = "#") : base(exchangeName, routingKey)
         {
             var queueDeclareOk = Channel.QueueDeclare(string.Empty, exclusive: true, autoDelete: true);
             var generatedQueueName = queueDeclareOk.QueueName;
@@ -22,7 +34,7 @@ namespace LTRuleEngine.RabbitMQ
         {
             var consumer = new EventingBasicConsumer(Channel);
             Console.WriteLine(Assembly.GetEntryAssembly().GetName().Name +
-                              " start and whiting for messages from exchange " + Exchange);
+                              " start and waiting for messages from exchange " + Exchange);
             consumer.Received += (_, ea) =>
             {
                 var body = ea.Body.ToArray();

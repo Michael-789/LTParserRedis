@@ -1,11 +1,23 @@
 using System.Text;
 using RabbitMQ.Client;
 
-namespace LTRuleEngine.RabbitMQ
+namespace LTParser.RabbitMQ
 {
     internal class RabbitMqSender : RabbitMqAbs
     {
-        public RabbitMqSender(string exchangeName, string routingKey = "#") : base(exchangeName, routingKey)
+        private static RabbitMqSender instance;
+
+        public static RabbitMqSender getInstance(string exchangeName, string routingKey = "#")
+        {
+
+            if (instance == null)
+            {
+                instance = new RabbitMqSender(exchangeName, routingKey);
+            }
+            return instance;
+
+        }
+        private RabbitMqSender(string exchangeName, string routingKey = "#") : base(exchangeName, routingKey)
         {
         }
 

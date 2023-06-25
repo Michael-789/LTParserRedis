@@ -1,8 +1,10 @@
 ﻿using LTParser;
 using LTParser.DTO;
-using LTRuleEngine.RabbitMQ;
+using LTParser.RabbitMQ;
 
 Console.WriteLine("Press X to stop");
 var parser = new Parser();
-new RabbitMqReceiver("flights").Receive<Flight>(parser.Parse);
+RabbitMqReceiver rabbitMQReceiver = (RabbitMqReceiver)RabbitMqFactory.Instance.create(Constants.RECIEVER, Constants.RAW_FLIGHTS_EXCHANGE);
+
+rabbitMQReceiver.Receive<Flight>(parser.Parse);
 Console.ReadLine();
