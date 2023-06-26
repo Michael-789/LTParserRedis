@@ -2,7 +2,7 @@
 {
     public class Constants
     {
-        //EXCHAGES
+        //EXCHANGES
         public static readonly string FLIGHTS_EXCHANGE = "flights";
         public static readonly string RAW_FLIGHTS_EXCHANGE = "raw_flights";
 
