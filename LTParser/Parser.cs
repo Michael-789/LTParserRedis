@@ -9,8 +9,13 @@ namespace LTParser;
 public class Parser
 {
     GeoJsonWriter geoJsonWriter = new GeoJsonWriter();
-    RabbitMqSender rabbitMQSender = (RabbitMqSender)RabbitMqFactory.Instance.create(Constants.SENDER, Constants.FLIGHTS_EXCHANGE);
+    ReddisHandler reddisHandler = new ReddisHandler();
+    //RabbitMqSender rabbitMQSender = (RabbitMqSender)RabbitMqFactory.Instance.create(Constants.SENDER, Constants.FLIGHTS_EXCHANGE);
 
+    public Parser()
+    {
+        reddisHandler.connect();
+    }
     public void Parse<T>(T obj)
     {
         //var jsonObj = JsonConvert.SerializeObject(obj);
@@ -18,11 +23,16 @@ public class Parser
         
         var jsonObj = geoJsonWriter.Write(obj);
 
+       
+
         if (obj != null)
         {
-            rabbitMQSender.Send(jsonObj);
+            //rabbitMQSender.Send(jsonObj);
+            reddisHandler.push2List("parsed_flights",jsonObj);
         }
         
 
     }
+
+    
 }

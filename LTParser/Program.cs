@@ -11,7 +11,11 @@ using System.Text;
 using System.Text.Json.Nodes;
 
 var parser = new Parser();
-RabbitMqReceiver rabbitMQReceiver = (RabbitMqReceiver)RabbitMqFactory.Instance.create(Constants.RECIEVER, Constants.RAW_FLIGHTS_EXCHANGE);
+//RabbitMqReceiver rabbitMQReceiver = (RabbitMqReceiver)RabbitMqFactory.Instance.create(Constants.RECIEVER, Constants.RAW_FLIGHTS_EXCHANGE);
 
-rabbitMQReceiver.Receive<Flight>(parser.Parse);
+//rabbitMQReceiver.Receive<Flight>(parser.Parse);
+var reddis = new ReddisHandler();
+
+reddis.connect();
+reddis.popFromList<Flight>(parser.Parse,"flightList");
 Console.ReadLine();
